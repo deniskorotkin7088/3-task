@@ -1,3 +1,22 @@
+Vue.component('kanban-card', {
+    template: `
+        <div class="card">
+            <h3>{{ card.title }}</h3>
+            <p class="description">{{ card.description }}</p>
+            <div class="meta">
+                <div>Создано: {{ card.createdAt }}</div>
+                <div>Дедлайн: {{ card.deadline }}</div>
+                <div v-if="card.editedAt">✏️ Ред.: {{ card.editedAt }}</div>
+            </div>
+        </div>
+    `,
+    props: {
+        card: {
+            type: Object,
+            required: true
+        }
+    }
+});
 let app = new Vue({
     el: '#app',
     data: {

@@ -14,27 +14,37 @@
     <div class="columns">
         <div class="column">
             <h2>Запланированные ({{ column1.length }})</h2>
-            <div v-for="card in column1" :key="card.id" class="card">
-                <h3>{{ card.title }}</h3>
-            </div>
+            <kanban-card 
+            v-for="card in column1" 
+            :key="card.id" 
+            :card="card">
+            </kanban-card>
+        </div>
+    </div>
         </div>
         <div class="column">
             <h2>В работе ({{ column2.length }})</h2>
-            <div v-for="card in column2" :key="card.id" class="card">
-                <h3>{{ card.title }}</h3>
-            </div>
+            <kanban-card 
+            v-for="card in column2" 
+            :key="card.id" 
+            :card="card">
+            </kanban-card>
         </div>
         <div class="column">
-            <h2>Тестирование ({{ column3.length }})</h2>
-            <div v-for="card in column3" :key="card.id" class="card">
-                <h3>{{ card.title }}</h3>
-            </div>
+            <h2>Тестрование ({{ column3.length }})</h2>
+            <kanban-card 
+            v-for="card in column3" 
+            :key="card.id" 
+            :card="card">
+            </kanban-card>
         </div>
         <div class="column">
             <h2>Выполненные ({{ column4.length }})</h2>
-            <div v-for="card in column4" :key="card.id" class="card">
-                <h3>{{ card.title }}</h3>
-            </div>
+            <kanban-card 
+            v-for="card in column4" 
+            :key="card.id" 
+            :card="card">
+            </kanban-card>
         </div>
     </div>
 </div>
