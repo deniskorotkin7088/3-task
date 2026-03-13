@@ -195,7 +195,33 @@ textarea.input {
 
 .submit-reason { background: #2ecc71; color: white; }
 .cancel-reason { background: #95a5a6; color: white; }
+.deadline-status {
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+}
 
+.overdue {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.ontime {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.card.overdue {
+    border-left-color: #c62828;
+    background: #ffebee;
+}
+
+.card.ontime {
+    border-left-color: #2e7d32;
+    background: #e8f5e9;
+}
 .column:nth-child(1) .card { border-left-color: #3498db; }
 .column:nth-child(2) .card { border-left-color: #f39c12; }
 .column:nth-child(3) .card { border-left-color: #9b59b6; }
