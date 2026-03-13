@@ -24,7 +24,9 @@
             <kanban-card 
             v-for="card in column1" 
             :key="card.id" 
-            :card="card">
+            :card="card"
+            @edit="handleEdit"
+            @delete="handleDelete">
             </kanban-card>
         </div>
     </div>
