@@ -10,18 +10,27 @@
 </head>
 <body>
     <div id="app">
-        <h1>Мои заметки</h1>
-        <div class="columns">
-            <div class="column">
-                <h2>Колонка 1</h2>
+    <h1>Мои заметки</h1>
+    <div class="columns">
+        <div class="column">
+            <h2>Колонка 1 ({{ column1.length }}/3)</h2>
+            <div v-for="card in column1" :key="card.id">
+                {{ card.title }}
             </div>
-            <div class="column">
-                <h2>Колонка 2</h2>
+        </div>
+        <div class="column">
+            <h2>Колонка 2 ({{ column2.length }}/5)</h2>
+            <div v-for="card in column2" :key="card.id">
+                {{ card.title }}
             </div>
-            <div class="column">
-                <h2>Колонка 3</h2>
+        </div>
+        <div class="column">
+            <h2>Колонка 3</h2>
+            <div v-for="card in column3" :key="card.id">
+                {{ card.title }}
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
