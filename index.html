@@ -6,31 +6,25 @@
     <link rel="stylesheet" href="css/main.css">
     <script defer src="js/vue.js"></script>
     <script defer src="js/main.js"></script>
-    <title>Notes App</title>
+    <title>Kanban Board</title>
 </head>
 <body>
     <div id="app">
-    <h1>Мои заметки</h1>
-    <div class="columns">
-        <div class="column">
-            <h2>Колонка 1 ({{ column1.length }}/3)</h2>
-            <div v-for="card in column1" :key="card.id">
-                {{ card.title }}
+        <h1>Kanban доска</h1>
+        <div class="columns">
+            <div class="column">
+                <h2>Запланированные задачи</h2>
             </div>
-        </div>
-        <div class="column">
-            <h2>Колонка 2 ({{ column2.length }}/5)</h2>
-            <div v-for="card in column2" :key="card.id">
-                {{ card.title }}
+            <div class="column">
+                <h2>Задачи в работе</h2>
             </div>
-        </div>
-        <div class="column">
-            <h2>Колонка 3</h2>
-            <div v-for="card in column3" :key="card.id">
-                {{ card.title }}
+            <div class="column">
+                <h2>Тестирование</h2>
+            </div>
+            <div class="column">
+                <h2>Выполненные задачи</h2>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
