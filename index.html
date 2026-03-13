@@ -11,6 +11,7 @@
 <body>
     <div id="app">
     <h1>Kanban доска</h1>
+    
     <div class="add-form">
         <h3>Новая задача</h3>
         <input v-model="newTitle" placeholder="Заголовок" class="input">
@@ -18,41 +19,53 @@
         <input v-model="newDeadline" type="date" class="input">
         <button @click="addCard" class="add-btn">Создать задачу</button>
     </div>
+    
     <div class="columns">
         <div class="column">
             <h2>Запланированные ({{ column1.length }})</h2>
             <kanban-card 
-            v-for="card in column1" 
-            :key="card.id" 
-            :card="card"
-            @edit="handleEdit"
-            @delete="handleDelete">
+                v-for="card in column1" 
+                :key="card.id" 
+                :card="card"
+                @edit="handleEdit"
+                @delete="handleDelete"
+                @move="handleMove">
             </kanban-card>
         </div>
-    </div>
-        </div>
+        
         <div class="column">
             <h2>В работе ({{ column2.length }})</h2>
             <kanban-card 
-            v-for="card in column2" 
-            :key="card.id" 
-            :card="card">
+                v-for="card in column2" 
+                :key="card.id" 
+                :card="card"
+                @edit="handleEdit"
+                @delete="handleDelete"
+                @move="handleMove">
             </kanban-card>
         </div>
+        
         <div class="column">
-            <h2>Тестрование ({{ column3.length }})</h2>
+            <h2>Тестирование ({{ column3.length }})</h2>
             <kanban-card 
-            v-for="card in column3" 
-            :key="card.id" 
-            :card="card">
+                v-for="card in column3" 
+                :key="card.id" 
+                :card="card"
+                @edit="handleEdit"
+                @delete="handleDelete"
+                @move="handleMove">
             </kanban-card>
         </div>
+        
         <div class="column">
             <h2>Выполненные ({{ column4.length }})</h2>
             <kanban-card 
-            v-for="card in column4" 
-            :key="card.id" 
-            :card="card">
+                v-for="card in column4" 
+                :key="card.id" 
+                :card="card"
+                @edit="handleEdit"
+                @delete="handleDelete"
+                @move="handleMove">
             </kanban-card>
         </div>
     </div>

@@ -9,14 +9,11 @@ Vue.component('kanban-card', {
                         <button @click="deleteCard" class="delete-btn">Удалить</button>
                     </div>
                 </div>
-                
                 <p class="description">{{ card.description }}</p>
-                
                 <div class="meta">
                     <div>Создано: {{ card.createdAt }}</div>
                     <div>Дедлайн: {{ card.deadline }}</div>
                     <div v-if="card.editedAt">Ред.: {{ card.editedAt }}</div>
-                    
                     <div v-if="card.column === 4" class="deadline-status" :class="deadlineClass">
                         {{ deadlineText }}
                     </div>
@@ -26,11 +23,9 @@ Vue.component('kanban-card', {
                     <button v-if="card.column === 1" @click="moveTo(2)" class="move-btn next">
                         В работу
                     </button>
-                    
                     <button v-if="card.column === 2" @click="moveTo(3)" class="move-btn next">
                         Тестирование
                     </button>
-                    
                     <div v-if="card.column === 3" class="move-group">
                         <button @click="moveTo(4)" class="move-btn next">Выполнено</button>
                         <button @click="showReturn = true" class="move-btn back">Вернуть</button>
@@ -38,11 +33,7 @@ Vue.component('kanban-card', {
                 </div>
                 
                 <div v-if="showReturn" class="return-reason">
-                    <textarea 
-                        v-model="returnReason" 
-                        placeholder="Причина возврата" 
-                        class="reason-input">
-                    </textarea>
+                    <textarea v-model="returnReason" placeholder="Причина возврата" class="reason-input"></textarea>
                     <button @click="submitReturn" class="submit-reason">Подтвердить</button>
                     <button @click="cancelReturn" class="cancel-reason">Отмена</button>
                 </div>
@@ -78,23 +69,14 @@ Vue.component('kanban-card', {
     computed: {
         deadlineText() {
             if (this.card.column !== 4) return '';
-            
             const today = new Date();
             const deadline = new Date(this.card.deadline);
-            
-            if (today > deadline) {
-                return 'Просрочено';
-            } else {
-                return 'Выполнено в срок';
-            }
+            return today > deadline ? 'Просрочено' : 'Выполнено в срок';
         },
-        
         deadlineClass() {
             if (this.card.column !== 4) return '';
-            
             const today = new Date();
             const deadline = new Date(this.card.deadline);
-            
             return today > deadline ? 'overdue' : 'ontime';
         }
     },
@@ -105,7 +87,6 @@ Vue.component('kanban-card', {
             this.editDeadline = this.card.deadline;
             this.isEditing = true;
         },
-        
         saveEdit() {
             this.$emit('edit', {
                 id: this.card.id,
@@ -115,17 +96,14 @@ Vue.component('kanban-card', {
             });
             this.isEditing = false;
         },
-        
         cancelEdit() {
             this.isEditing = false;
         },
-        
         deleteCard() {
             if (confirm('Удалить карточку?')) {
                 this.$emit('delete', this.card.id);
             }
         },
-        
         moveTo(column) {
             this.$emit('move', {
                 id: this.card.id,
@@ -135,13 +113,11 @@ Vue.component('kanban-card', {
             this.showReturn = false;
             this.returnReason = '';
         },
-        
         submitReturn() {
             if (this.returnReason) {
                 this.moveTo(2);
             }
         },
-        
         cancelReturn() {
             this.showReturn = false;
             this.returnReason = '';
@@ -152,61 +128,16 @@ Vue.component('kanban-card', {
 let app = new Vue({
     el: '#app',
     data: {
-        cards: [
-            { 
-                id: 1, 
-                title: 'Разработка макета', 
-                description: 'Создать дизайн главной страницы',
-                deadline: '2026-03-20',
-                column: 1,
-                createdAt: '2026-03-13',
-                editedAt: null
-            },
-            { 
-                id: 2, 
-                title: 'Верстка компонентов', 
-                description: 'Реализовать карточки товаров',
-                deadline: '2026-03-22',
-                column: 2,
-                createdAt: '2026-03-13',
-                editedAt: null
-            },
-            { 
-                id: 3, 
-                title: 'Тестирование интерфейса', 
-                description: 'Проверить все функции',
-                deadline: '2026-03-15',
-                column: 3,
-                createdAt: '2026-03-13',
-                editedAt: null
-            },
-            { 
-                id: 4, 
-                title: 'Завершенная задача', 
-                description: 'Пример выполненной задачи',
-                deadline: '2026-03-10',
-                column: 4,
-                createdAt: '2026-03-13',
-                editedAt: null
-            }
-        ],
+        cards: [],
         newTitle: '',
         newDescription: '',
         newDeadline: ''
     },
     computed: {
-        column1() { 
-            return this.cards.filter(c => c.column === 1); 
-        },
-        column2() { 
-            return this.cards.filter(c => c.column === 2); 
-        },
-        column3() { 
-            return this.cards.filter(c => c.column === 3); 
-        },
-        column4() { 
-            return this.cards.filter(c => c.column === 4); 
-        }
+        column1() { return this.cards.filter(c => c.column === 1); },
+        column2() { return this.cards.filter(c => c.column === 2); },
+        column3() { return this.cards.filter(c => c.column === 3); },
+        column4() { return this.cards.filter(c => c.column === 4); }
     },
     methods: {
         addCard() {
@@ -223,10 +154,10 @@ let app = new Vue({
             };
             
             this.cards.push(card);
-            
             this.newTitle = '';
             this.newDescription = '';
             this.newDeadline = '';
+            this.saveToStorage();
         },
         
         handleEdit(data) {
@@ -236,13 +167,13 @@ let app = new Vue({
                 card.description = data.description;
                 card.deadline = data.deadline;
                 card.editedAt = new Date().toLocaleString();
+                this.saveToStorage();
             }
-        },
-        
+        }, 
         handleDelete(id) {
             this.cards = this.cards.filter(c => c.id !== id);
+            this.saveToStorage();
         },
-        
         handleMove(data) {
             const card = this.cards.find(c => c.id === data.id);
             if (card) {
@@ -251,7 +182,20 @@ let app = new Vue({
                     card.returnReason = data.reason;
                     card.editedAt = new Date().toLocaleString();
                 }
+                this.saveToStorage();
+            }
+        },
+        saveToStorage() {
+            localStorage.setItem('kanban', JSON.stringify(this.cards));
+        },
+        loadFromStorage() {
+            const saved = localStorage.getItem('kanban');
+            if (saved) {
+                this.cards = JSON.parse(saved);
             }
         }
+    },
+    mounted() {
+        this.loadFromStorage();
     }
 });
