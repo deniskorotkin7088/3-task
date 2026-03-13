@@ -11,6 +11,13 @@
 <body>
     <div id="app">
     <h1>Kanban доска</h1>
+    <div class="add-form">
+        <h3>Новая задача</h3>
+        <input v-model="newTitle" placeholder="Заголовок" class="input">
+        <textarea v-model="newDescription" placeholder="Описание" class="input"></textarea>
+        <input v-model="newDeadline" type="date" class="input">
+        <button @click="addCard" class="add-btn">Создать задачу</button>
+    </div>
     <div class="columns">
         <div class="column">
             <h2>Запланированные ({{ column1.length }})</h2>

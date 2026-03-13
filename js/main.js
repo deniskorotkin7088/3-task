@@ -20,30 +20,36 @@ Vue.component('kanban-card', {
 let app = new Vue({
     el: '#app',
     data: {
-        cards: [
-            { 
-                id: 1, 
-                title: 'Разработка макета', 
-                description: 'Создать дизайн главной страницы',
-                deadline: '2026-03-20',
-                column: 1,
-                createdAt: '2026-03-13',
-                editedAt: null
-            }
-        ]
+        cards: [],
+        newTitle: '',
+        newDescription: '',
+        newDeadline: ''
     },
     computed: {
-        column1() {
-            return this.cards.filter(c => c.column === 1);
-        },
-        column2() {
-            return this.cards.filter(c => c.column === 2);
-        },
-        column3() {
-            return this.cards.filter(c => c.column === 3);
-        },
-        column4() {
-            return this.cards.filter(c => c.column === 4);
+        column1() { return this.cards.filter(c => c.column === 1); },
+        column2() { return this.cards.filter(c => c.column === 2); },
+        column3() { return this.cards.filter(c => c.column === 3); },
+        column4() { return this.cards.filter(c => c.column === 4); }
+    },
+    methods: {
+
+        addCard() {
+            if (!this.newTitle || !this.newDeadline) return;
+            
+            const card = {
+                id: Date.now(),
+                title: this.newTitle,
+                description: this.newDescription || 'Нет описания',
+                deadline: this.newDeadline,
+                column: 1,
+                createdAt: new Date().toLocaleDateString(),
+                editedAt: null
+            };
+            
+            this.cards.push(card);
+            this.newTitle = '';
+            this.newDescription = '';
+            this.newDeadline = '';
         }
     }
 });

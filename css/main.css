@@ -67,7 +67,41 @@ h1 {
 .meta div {
     margin: 2px 0;
 }
+.add-form {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
 
+.input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+textarea.input {
+    min-height: 80px;
+}
+
+.add-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.add-btn:hover {
+    background: #2980b9;
+}
 .column:nth-child(1) .card { border-left-color: #3498db; }
 .column:nth-child(2) .card { border-left-color: #f39c12; }
 .column:nth-child(3) .card { border-left-color: #9b59b6; }
