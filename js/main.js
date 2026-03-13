@@ -1,6 +1,6 @@
 Vue.component('kanban-card', {
     template: `
-     <div class="card">
+    <div class="card">
             <div v-if="!isEditing">
                 <div class="card-header">
                     <h3>{{ card.title }}</h3>
@@ -15,9 +15,27 @@ Vue.component('kanban-card', {
                     <div>Дедлайн: {{ card.deadline }}</div>
                     <div v-if="card.editedAt">Ред.: {{ card.editedAt }}</div>
                 </div>
+                <div class="move-buttons">
+                    <button v-if="card.column === 1" @click="moveTo(2)" class="move-btn next">
+                        В работу
+                    </button>
+                    <button v-if="card.column === 2" @click="moveTo(3)" class="move-btn next">
+                        Тестирование
+                    </button>
+                    <div v-if="card.column === 3" class="move-group">
+                        <button @click="moveTo(4)" class="move-btn next">Выполнено</button>
+                        <button @click="showReturn = true" class="move-btn back">Вернуть</button>
+                    </div>
+                </div>
+                <div v-if="showReturn" class="return-reason">
+                    <textarea v-model="returnReason" placeholder="Причина возврата" class="reason-input"></textarea>
+                    <button @click="submitReturn" class="submit-reason">Подтвердить</button>
+                    <button @click="cancelReturn" class="cancel-reason">Отмена</button>
+                </div>
             </div>
+            
             <div v-else class="edit-mode">
-                <input v-model="editTitle" placeholder="Заголовок" class="edit-input">
+             <input v-model="editTitle" placeholder="Заголовок" class="edit-input">
                 <textarea v-model="editDescription" placeholder="Описание" class="edit-input"></textarea>
                 <input v-model="editDeadline" type="date" class="edit-input">
                 <div class="edit-actions">
@@ -38,7 +56,9 @@ Vue.component('kanban-card', {
             isEditing: false,
             editTitle: '',
             editDescription: '',
-            editDeadline: ''
+            editDeadline: '',
+            showReturn: false,
+            returnReason: ''
         };
     },
     methods: {
@@ -64,6 +84,24 @@ Vue.component('kanban-card', {
             if (confirm('Удалить карточку?')) {
                 this.$emit('delete', this.card.id);
             }
+        },
+         moveTo(column) {
+            this.$emit('move', {
+                id: this.card.id,
+                toColumn: column,
+                reason: this.returnReason
+            });
+            this.showReturn = false;
+            this.returnReason = '';
+        },
+        submitReturn() {
+            if (this.returnReason) {
+                this.moveTo(2);
+            }
+        },
+        cancelReturn() {
+            this.showReturn = false;
+            this.returnReason = '';
         }
     }
 });
@@ -112,6 +150,16 @@ let app = new Vue({
     },
     handleDelete(id) {
         this.cards = this.cards.filter(c => c.id !== id);
+    },
+    handleMove(data) {
+    const card = this.cards.find(c => c.id === data.id);
+    if (card) {
+        card.column = data.toColumn;
+        if (data.reason) {
+            card.returnReason = data.reason;
+            card.editedAt = new Date().toLocaleString();
+        }
     }
+}
 }
 });
